@@ -3,7 +3,7 @@ name: Publish to pub.dev
 on:
   push:
     tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+' # correspond au pattern v{{version}} sur pub.dev
+      - 'v[0-9]+.[0-9]+.[0-9]+'
 
 jobs:
   publish:
@@ -16,14 +16,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: dart-lang/setup-dart@v1
+      - uses: subosito/flutter-action@v2
         with:
-          sdk: stable
+          flutter-version: '3.16.0' # ou la version que tu veux
 
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Dry-run check
+      - name: Validate package (dry-run)
         run: flutter pub publish --dry-run
 
       - name: Publish to pub.dev via OIDC
