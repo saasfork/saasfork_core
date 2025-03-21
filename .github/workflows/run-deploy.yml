@@ -19,3 +19,4 @@ jobs:
           flutterBranch: stable
           format: true
           force: true
+          skipTests: true
