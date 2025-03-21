@@ -24,6 +24,11 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      - name: Add pub.dev token
+        run: dart pub token add https://pub.dev --env-var PUB_DEV_TOKEN
+        env:
+          PUB_DEV_TOKEN: ${{ secrets.PUB_DEV_TOKEN }}
+
       - name: Validate package (dry-run)
         run: flutter pub publish --dry-run
 
