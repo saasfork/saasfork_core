@@ -67,7 +67,7 @@ class Logger {
       debugPrint('$prefix Stack trace:\n$stackTrace');
     }
 
-    // TODO: Ici vous pourriez ajouter l'envoi à un service de journalisation distant
+    // Ici vous pourriez ajouter l'envoi à un service de journalisation distant
     // comme Firebase Crashlytics, Sentry ou LogRocket pour les applications en production.
   }
 }
