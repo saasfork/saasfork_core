@@ -1,13 +1,20 @@
-## 0.0.1
+## 0.0.4
 
-* Initial version
-
-## 0.0.2
-
-* Update documentation
+* Added a model to manage different image types
 
 ## 0.0.3
 
 * Added documentation for the notification system
 * Improved user models presentation
 * Updated usage examples to make them more concise
+
+## 0.0.2
+
+* Update documentation
+
+## 0.0.1
+
+* Initial version
+
+
+
