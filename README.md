@@ -130,25 +130,118 @@ class MyWidget extends ConsumerWidget {
 }
 ```
 
-#### Fonctionnalités du système de notification
+### 4. Système de configuration
 
-- Quatre types de notifications : erreur, succès, info, avertissement
-- Prise en charge des titres et messages
-- État géré par Riverpod pour une intégration facile dans l'architecture de l'application
-- Méthode `clear()` pour effacer les notifications après traitement
+Un système de configuration centralisé qui permet de gérer les paramètres de l'application et les variables d'environnement.
 
-## Bonnes pratiques
+#### Initialisation
 
-1. **Journalisation** : Utilisez les différents niveaux de log de manière cohérente
-   - `info` pour le suivi normal des opérations
-   - `warn` pour les situations anormales mais non critiques
-   - `error` pour les véritables erreurs nécessitant une attention
+```dart
+import 'package:saasfork_core/saasfork_core.dart';
 
-2. **Structure des modèles** : Tous nos modèles implémentent :
-   - Méthodes de sérialisation (`toMap()`, `toJson()`)
-   - Méthodes de désérialisation (`fromMap()`, `fromJson()`)
-   - Opérateurs d'équivalence (`==`, `hashCode`)
-   - Méthode `copyWith()` pour manipulation immuable
-   - Méthode `toString()` pour faciliter le débogage
+await SFConfig.initialize(
+  envFilePath: '.env', // Chemin vers votre fichier .env
+  defaultConfig: {
+    'app.name': 'Mon Application',
+    'app.version': '1.0.0',
+    'api.url': 'https://api.example.com',
+  },
+  environment: 'dev', // ou 'prod', 'staging', etc.
+);
+```
 
-3. **Performance** : Évitez les logs trop fréquents dans les sections critiques de votre application
+#### Accès aux valeurs de configuration
+
+```dart
+// Accès à une valeur avec type spécifié et valeur par défaut
+final appName = SFConfig.get<String>('app.name', defaultValue: 'Application');
+final debugMode = SFConfig.get<bool>('app.debug', defaultValue: false);
+final apiTimeout = SFConfig.get<int>('api.timeout', defaultValue: 30);
+
+// Vérification de l'environnement courant
+if (SFConfig.isDevelopment) {
+  // Code spécifique à l'environnement de développement
+}
+
+if (SFConfig.isProduction) {
+  // Code spécifique à l'environnement de production
+}
+
+// Obtenir l'environnement actuel
+final env = SFConfig.environment; // 'dev', 'prod', etc.
+```
+
+#### Accès à une section de configuration
+
+```dart
+// Récupérer toutes les configurations commençant par 'api.'
+final apiConfig = SFConfig.getSection('api');
+// Résultat: { 'url': 'https://api.example.com', 'timeout': 30, ... }
+
+// Utilisation
+final apiUrl = apiConfig['url'] as String;
+```
+
+#### Intégration avec fichier .env
+
+SFConfig se base sur flutter_dotenv pour charger les variables d'environnement à partir d'un fichier .env:
+
+```
+# Exemple de fichier .env
+APP_NAME=Mon Application
+APP_VERSION=1.0.0
+API_URL=https://api.exemple.com
+DEBUG_MODE=true
+```
+
+Ces variables seront disponibles via SFConfig, avec conversion automatique des types pour les booléens, entiers et nombres à virgule flottante.
+
+#### Exemple pratique avec AppConfig
+
+Créez une classe wrapper pour centraliser la configuration de votre application:
+
+```dart
+class AppConfig {
+  static T? get<T>(String key, {T? defaultValue}) {
+    return SFConfig.get<T>(key, defaultValue: defaultValue);
+  }
+
+  static Map<String, dynamic> getDefaultConfig() {
+    return {'app.name': 'Clink2Pay', 'app.version': '1.0.0'};
+  }
+
+  static Future<void> initialize({String environment = 'dev'}) async {
+    final defaultConfig = getDefaultConfig();
+
+    if (defaultConfig.containsKey(environment)) {
+      final envSpecificConfig =
+          defaultConfig[environment] as Map<String, dynamic>;
+
+      // Remplacer les valeurs par défaut
+      defaultConfig.addAll(envSpecificConfig);
+
+      // Supprimer la section d'environnement après fusion
+      defaultConfig.remove(environment);
+      defaultConfig.remove('dev');
+      defaultConfig.remove('prod');
+    }
+
+    await SFConfig.initialize(
+      envFilePath: '.env',
+      defaultConfig: defaultConfig,
+      environment: environment,
+    );
+  }
+}
+```
+
+Utilisation dans votre application:
+
+```dart
+// Initialiser au démarrage de l'application
+await AppConfig.initialize(environment: 'prod');
+
+// Accéder aux valeurs de configuration
+final appName = AppConfig.get<String>('app.name');
+final isDebug = AppConfig.get<bool>('app.debug', defaultValue: false);
+```
