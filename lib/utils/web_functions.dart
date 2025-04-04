@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:saasfork_core/saasfork_core.dart';
-import 'package:web/web.dart' as web;
+import 'package:universal_html/html.dart' as web;
 
 // get http://localhost:XXX or http://example.com
 String getLocalhostUrl() {
