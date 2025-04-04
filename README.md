@@ -245,3 +245,15 @@ await AppConfig.initialize(environment: 'prod');
 final appName = AppConfig.get<String>('app.name');
 final isDebug = AppConfig.get<bool>('app.debug', defaultValue: false);
 ```
+
+## Web Functions Utilities
+
+The `web_functions.dart` utility provides a set of helper functions for web-specific operations.
+
+### getLocalhostUrl()
+
+Retrieves the current URL (protocol, hostname, and port) in a web environment.
+
+```dart
+String url = getLocalhostUrl();
+```

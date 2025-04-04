@@ -1,3 +1,8 @@
+## 0.0.5
+
+* Added SFConfig utility for centralized application configuration management
+* Added web functions utility with getLocalhostUrl() to retrieve the current URL in web environment
+
 ## 0.0.4
 
 * Added a model to manage different image types
