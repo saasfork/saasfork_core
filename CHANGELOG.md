@@ -1,3 +1,8 @@
+## 0.0.6
+
+* Fixed bugs
+
+
 ## 0.0.5
 
 * Added SFConfig utility for centralized application configuration management
