@@ -1,3 +1,7 @@
+## 0.0.7 (EDITING)
+
+* Added preference manager using shared_preferences
+
 ## 0.0.6
 
 * Fixed bugs
