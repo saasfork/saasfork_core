@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:saasfork_core/providers/settings_service.dart';
 import 'package:saasfork_core/saasfork_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
