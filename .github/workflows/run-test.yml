@@ -22,14 +22,14 @@ jobs:
 
       - name: Modify pubspec.yaml
         run: |
-          # Remplacer mockito version
-          sed -i 's/mockito: \^5.4.5/mockito: 5.3.2/g' pubspec.yaml
+          # Ne pas downgrader mockito, mais utiliser une version compatible
+          # Remplacer build_runner par une version qui fonctionne avec les versions récentes
+          sed -i 's/build_runner: \^2.4.15/build_runner: ^2.4.6/g' pubspec.yaml
           
-          # Ajouter une section dependency_overrides pour forcer mockito 5.3.2
+          # Ajouter une section dependency_overrides pour résoudre les conflits
           cat >> pubspec.yaml << EOL
           
           dependency_overrides:
-            mockito: 5.3.2
             analyzer: 5.13.0
           EOL
           
