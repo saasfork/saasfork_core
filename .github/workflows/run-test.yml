@@ -20,10 +20,21 @@ jobs:
       - name: Clear Pub Cache
         run: rm -rf $HOME/.pub-cache
 
-      - name: Force mockito version
+      - name: Modify pubspec.yaml
         run: |
-          sed -i 's/mockito: \^5.4.5/mockito: 5.4.5/g' pubspec.yaml
-          cat pubspec.yaml | grep mockito
+          # Remplacer mockito version
+          sed -i 's/mockito: \^5.4.5/mockito: 5.3.2/g' pubspec.yaml
+          
+          # Ajouter une section dependency_overrides pour forcer mockito 5.3.2
+          cat >> pubspec.yaml << EOL
+          
+          dependency_overrides:
+            mockito: 5.3.2
+            analyzer: 5.13.0
+          EOL
+          
+          # Vérifier le résultat
+          cat pubspec.yaml
 
       - name: Install Dependencies
         run: flutter pub get
