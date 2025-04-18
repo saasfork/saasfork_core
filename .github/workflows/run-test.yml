@@ -15,7 +15,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.29.2'  # La même version que votre environnement local
+          flutter-version: '3.29.2'
           channel: 'stable'
 
       - name: Clear Pub Cache
