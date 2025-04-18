@@ -1,6 +1,7 @@
-## 0.0.7 (EDITING)
+## 0.0.7
 
 * Added preference manager using shared_preferences
+* Added SEO model `SFSEOModel`
 
 ## 0.0.6
 

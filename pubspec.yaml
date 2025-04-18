@@ -1,6 +1,6 @@
 name: saasfork_core
 description: "Un package Flutter pour gérer la logique core de SaaS Fork."
-version: 0.0.6
+version: 0.0.7
 homepage: https://github.com/saasfork/saasfork_core
 repository: https://github.com/saasfork/saasfork_core
 issue_tracker: https://github.com/saasfork/saasfork_core/issues
