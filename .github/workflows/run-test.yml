@@ -23,8 +23,11 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
 
+      - name: Downgrade mockito temporairement
+        run: flutter pub add mockito:5.3.2 --dev
+
       - name: Run build_runner
-        run: flutter pub run build_runner build
+        run: flutter pub run build_runner build --delete-conflicting-outputs
 
       - name: Run Tests
         run: flutter test
