@@ -21,7 +21,7 @@ jobs:
         run: rm -rf $HOME/.pub-cache
 
       - name: Install Dependencies
-        run: flutter pub clean
+        run: flutter clean
 
       - name: Install Dependencies
         run: flutter pub get
