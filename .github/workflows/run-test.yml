@@ -17,8 +17,8 @@ jobs:
         with:
           channel: 'stable'
 
-      - name: Run Tests
-        run: flutter test
+      - name: Clean Flutter Cache
+        run: flutter clean
 
       - name: Install Dependencies
         run: flutter pub get
@@ -28,4 +28,4 @@ jobs:
 
       - name: Run Tests
         run: flutter test
-          
+
