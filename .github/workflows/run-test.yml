@@ -23,6 +23,11 @@ jobs:
       - name: Install Dependencies
         run: flutter clean
 
+      - name: Force mockito version
+        run: |
+          sed -i 's/mockito: \^5.3.2/mockito: 5.3.2/g' pubspec.yaml
+          cat pubspec.yaml | grep mockito
+
       - name: Install Dependencies
         run: flutter pub get
 
