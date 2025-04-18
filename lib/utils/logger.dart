@@ -5,6 +5,10 @@ import 'package:flutter/foundation.dart';
 /// Permet de journaliser des messages avec différents niveaux de priorité
 /// et éventuellement de les envoyer à des services externes.
 class Logger {
+  /// Indique si les logs doivent être affichés
+  /// Par défaut, les logs sont désactivés en mode release (production)
+  static bool enableLogs = !kReleaseMode;
+
   /// Journalise un message de niveau INFO
   ///
   /// [message] Le message à journaliser
@@ -33,7 +37,15 @@ class Logger {
     StackTrace? stackTrace,
     String? tag,
   }) {
-    _log('ERROR', message, error: error, stackTrace: stackTrace, tag: tag);
+    // Les erreurs sont toujours journalisées, même en production
+    _log(
+      'ERROR',
+      message,
+      error: error,
+      stackTrace: stackTrace,
+      tag: tag,
+      forceLog: true,
+    );
   }
 
   /// Méthode interne pour formater et afficher les messages de log
@@ -47,13 +59,20 @@ class Logger {
   /// [error] L'objet d'erreur optionnel pour fournir des détails supplémentaires
   /// [stackTrace] La trace d'appels optionnelle pour faciliter le débogage
   /// [tag] Tag optionnel pour catégoriser le message
+  /// [forceLog] Force l'affichage du log même si les logs sont désactivés
   static void _log(
     String level,
     String message, {
     dynamic error,
     StackTrace? stackTrace,
     String? tag,
+    bool forceLog = false,
   }) {
+    // Ne pas afficher les logs si désactivés, sauf si forceLog est true
+    if (!enableLogs && !forceLog) {
+      return;
+    }
+
     final now = DateTime.now();
     final prefix = '[$now] [$level] ${tag != null ? '[$tag] ' : ''}';
 
@@ -69,6 +88,15 @@ class Logger {
 
     // Ici vous pourriez ajouter l'envoi à un service de journalisation distant
     // comme Firebase Crashlytics, Sentry ou LogRocket pour les applications en production.
+  }
+
+  /// Configure le logger
+  ///
+  /// [enable] Active ou désactive l'affichage des logs
+  static void configure({bool? enable}) {
+    if (enable != null) {
+      enableLogs = enable;
+    }
   }
 }
 
