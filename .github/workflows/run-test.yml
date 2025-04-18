@@ -17,8 +17,8 @@ jobs:
         with:
           channel: 'stable'
 
-      - name: Clean Flutter Cache
-        run: flutter clean
+      - name: Clear Pub Cache
+        run: rm -rf $HOME/.pub-cache
 
       - name: Install Dependencies
         run: flutter pub get
